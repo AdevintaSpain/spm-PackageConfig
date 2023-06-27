@@ -1,4 +1,4 @@
-// swift-tools-version:4.2
+// swift-tools-version:5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -9,17 +9,23 @@ let package = Package(
 		.library(name: "PackageConfig", targets: ["PackageConfig"]),
 		.executable(name: "package-config", targets: ["PackageConfigExecutable"]),
 
-		.library(name: "ExampleConfig", type: .dynamic, targets: ["ExampleConfig"]),
-		.executable(name: "package-config-example", targets: ["Example"]),
+		.library(name: "ExampleConfig", targets: ["ExampleConfig"]),
+		.executable(name: "package-config-example", targets: ["PackageConfigExecutable"]),
+
     ],
     dependencies: [
     ],
     targets: [
 		.target(name: "PackageConfig", dependencies: []),
-		.target(name: "PackageConfigExecutable", dependencies: []),
-
+		.executableTarget(name: "PackageConfigExecutable"),
 		.target(name: "ExampleConfig", dependencies: ["PackageConfig"]),
-		.target(name: "Example", dependencies: ["PackageConfig", "ExampleConfig"]),
+        .executableTarget(
+            name: "Example",
+            dependencies: [
+                "PackageConfig",
+                "ExampleConfig",
+            ]
+        )
 
 //		.target(name: "PackageConfigs", dependencies: ["ExampleConfig"]),
     ]
